@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNG Testing Plant</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --accent: #00b894;
+            --accent-hover: #00cec9;
+            --text-light: #2d3436;
+            --bg-white: #f4f7fa;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-light);
+            background-color: var(--bg-white);
+        }
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(90deg, #2c3e50, #1a3c34) !important;
+            padding: 1.2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ffffff !important;
+            transition: transform 0.3s ease-in-out;
+        }
+        .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+        .nav-link {
+            color: #dfe6e9 !important;
+            font-weight: 500;
+            transition: color 0.3s, transform 0.3s ease-in-out;
+        }
+        .nav-link:hover {
+            color: var(--accent-hover) !important;
+            transform: translateY(-2px);
+        }
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://media.istockphoto.com/id/1364579543/photo/equipment-inside-the-chemical-plant.jpg?s=1024x1024&w=is&k=20&c=8PjU22xrEC9jFoHS4dpwCgmwvaNHZM5kmW_fWPUdVKA=') no-repeat center center/cover;
+            color: #ffffff;
+            padding: 180px 0;
+            text-align: center;
+            position: relative;
+            background-attachment: fixed;
+        }
+        .hero-section h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            animation: zoomIn 1.5s ease-in-out;
+        }
+        .hero-section p {
+            font-size: 1.4rem;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: slideInUp 1.5s ease-in-out 0.5s;
+        }
+        .btn-custom {
+            background: linear-gradient(45deg, var(--accent), var(--accent-hover));
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1.5s ease-in-out 1s;
+        }
+        .btn-custom:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 200, 150, 0.4);
+        }
+        .btn-custom::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            left: -100%;
+            top: 0;
+            transition: left 0.6s ease-in-out;
+        }
+        .btn-custom:hover::after {
+            left: 100%;
+        }
+        /* Sections */
+        section {
+            padding: 100px 0;
+        }
+        h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 3rem;
+            color: #1a3c34;
+            text-align: center;
+            position: relative;
+            animation: fadeInDown 1.5s ease-in-out;
+        }
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(45deg, var(--accent), var(--accent-hover));
+            margin: 10px auto;
+            animation: pulse-line 2.5s ease-in-out infinite;
+        }
+        /* Feature Cards */
+        .feature-card {
+            border: none;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+            border-image: linear-gradient(45deg, var(--accent), var(--accent-hover)) 1;
+        }
+        .feature-card .card-body {
+            padding: 2.5rem;
+        }
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .feature-card:hover i {
+            transform: scale(1.2) rotate(10deg);
+        }
+        /* Services */
+        .service-item {
+            padding: 2rem;
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .service-item:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 0;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-title h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #1a3c34;
+            position: relative;
+        }
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1.5s ease-in-out 0.5s;
+        }
+        .contact-info-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 2rem;
+            border: 2px solid transparent;
+            transition: transform 0.4s ease-in-out;
+        }
+        .contact-info-box:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-image: linear-gradient(45deg, var(--accent), var(--accent-hover)) 1;
+        }
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+            transition: transform 0.4s ease-in-out;
+        }
+        .contact-info-item:hover {
+            transform: translateX(10px);
+        }
+        .contact-info-item i {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-right: 15px;
+            transition: transform 0.4s ease-in-out;
+        }
+        .contact-info-item:hover i {
+            transform: rotate(360deg);
+        }
+        .contact-info-item a {
+            color: var(--text-light);
+            text-decoration: none;
+        }
+        .contact-info-item a:hover {
+            color: var(--accent-hover);
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 320px;
+            border: 0;
+            border-radius: 16px;
+            margin-top: 1.5rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease-in-out;
+        }
+        .map-container iframe:hover {
+            transform: scale(1.02);
+        }
+        .contact-form {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 2.5rem;
+            border: 2px solid transparent;
+            transition: transform 0.4s ease-in-out;
+        }
+        .contact-form:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-image: linear-gradient(45deg, var(--accent), var(--accent-hover)) 1;
+        }
+        .form-floating > label {
+            color: #888;
+            transition: all 0.3s ease-in-out;
+        }
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #dfe6e9;
+            padding: 0.8rem;
+            transition: border-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+        }
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 0.3rem rgba(0, 184, 148, 0.2);
+        }
+        .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+        .success-message {
+            display: none;
+            color: var(--accent);
+            font-weight: 500;
+            text-align: center;
+            margin-top: 1rem;
+            animation: bounceIn 1s ease-in-out;
+        }
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #2c3e50, #1a3c34);
+            color: #ffffff;
+            padding: 60px 0;
+        }
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .footer a:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        .footer i {
+            font-size: 1.8rem;
+            margin: 0 12px;
+            transition: transform 0.5s ease-in-out;
+        }
+        .footer i:hover {
+            transform: rotate(360deg) scale(1.2);
+        }
+        /* Animations */
+        @keyframes pulse-line {
+            0% { transform: scaleX(1); }
+            50% { transform: scaleX(1.15); }
+            100% { transform: scaleX(1); }
+        }
+        @keyframes smoothScale {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .animate__animated {
+            animation-duration: 1.2s;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            animation: smoothScale 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 100px 0;
+            }
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            .hero-section p {
+                font-size: 1.1rem;
+            }
+ .section-title h2 {
+                font-size: 2.2rem;
+            }
+            .section-title p {
+                font-size: 1rem;
+            }
+            .map-container iframe {
+                height: 250px;
+            }
+            .btn-custom {
+                padding: 0.8rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">9
+            <a class="navbar-brand animate__animated animate__fadeIn" href="index.html">CNG Testing Plant</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active animate__animated animate__fadeInRight animate__delay-0s" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInRight animate__delay-0.2s" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInRight animate__delay-0.4s" href="#technologies">Technologies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInRight animate__delay-0.6s" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInRight animate__delay-0.5s" href="gallary.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInRight animate__delay-0.9s" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInRight animate__delay-0.6s" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <h1 class="animate__animated animate__zoomIn">Innovate. Test. Sustain.</h1>
+            <p class="animate__animated animate__slideInUp animate__delay-0.5s">Cutting-edge solutions for safe and efficient CNG testing, powering a cleaner future.</p>
+            <a href="contact.html" class="btn btn-custom btn-lg animate__animated animate__fadeInUp animate__delay-1s">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Technologies Section -->
+    <section id="technologies">
+        <div class="container">
+            <h2 class="animate__animated animate__fadeInDown">Our Technologies</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card scroll-animate">
+                        <div class="card-body text-center">
+                            <i class="fas fa-vial"></i>
+                            <h5 class="card-title">Automated Gas Analyzers</h5>
+                            <p class="card-text">Precision analysis for CNG composition in real-time.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card scroll-animate">
+                        <div class="card-body text-center">
+                            <i class="fas fa-microchip"></i>
+                            <h5 class="card-title">IoT Integration</h5>
+                            <p class="card-text">Smart sensors for remote monitoring and maintenance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card scroll-animate">
+                        <div class="card-body text-center">
+                            <i class="fas fa-brain"></i>
+                            <h5 class="card-title">AI Diagnostics</h5>
+                            <p class="card-text">AI-powered anomaly detection for efficiency.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="bg-light">
+        <div class="container">
+            <h2 class="animate__animated animate__fadeInDown">Our Services</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="service-item scroll-animate">
+                        <h4>Quality Testing</h4>
+                        <p>Ensuring CNG meets purity and safety standards.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="service-item scroll-animate">
+                        <h4>Equipment Calibration</h4>
+                        <p>High-precision calibration for reliable results.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="service-item scroll-animate">
+                        <h4>Compliance Certification</h4>
+                        <p>Global standard certifications for CNG compliance.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="service-item scroll-animate">
+                        <h4>Quality Testing</h4>
+                        <p>Ensuring CNG meets purity and safety standards.</p>
+                    </div>
+                
+                </div>
+                <div class="col-md- Leak Detection"></h4>
+                    <p>Advanced techniques for identifying and resolving CNG system leaks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section bg-white" aria-label="Contact us">
+        <div class="container">
+            <div class="section-title scroll-animate">
+                <h2 class="animate__animated animate__fadeInDown">Let's Connect</h2>
+                <p class="animate__animated animate__fadeInUp animate__delay-0.5s">Have a question or project in mind? We’d love to hear from you.</p>
+            </div>
+            <div class="row g-5">
+                <div class="col-lg-4 scroll-animate">
+                    <div class="contact-info-box p-4 animate__animated animate__zoomIn animate__delay-0s">
+                        <div class="contact-info-item">
+                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            <span>123 Clean Energy Lane, Green City, GC 12345, USA</span>
+                        </div>
+                        <div class="contact-info-item">
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <span><a href="mailto:info@cngtestingplant.com">info@cngtestingplant.com</a></span>
+                        </div>
+                        <div class="contact-info-item">
+                            <i class="fas fa-phone" aria-hidden="true"></i>
+                            <span><a href="tel:+15551234567">+1 (555) 123-4567</a></span>
+                        </div>
+                    </div>
+                    <div class="map-container animate__animated animate__zoomIn animate__delay-0.5s">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0194!2d-122.4216!3d37.7749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDU0JzUzLjciTiAxMjLCsDI1JzE2LjciVw!5e0!3m2!1sen!2sus!4v1630000000000!5m2!1sen!2sus" width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy" title="CNG Testing Plant Location"></iframe>
+                    </div>
+                </div>
+                <div class="col-lg-8 scroll-animate">
+                    <div class="contact-form p-4 animate__animated animate__zoomIn animate__delay-0.3s">
+                        <form id="contactFormIndex" novalidate>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control animate__animated animate__fadeIn animate__delay-0s" id="nameIndex" placeholder="Your Name" required aria-required="true">
+                                        <label for="nameIndex">Your Name</label>
+                                        <div class="invalid-feedback">Please enter your name.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control animate__animated animate__fadeIn animate__delay-0.2s" id="emailIndex" placeholder="Email" required aria-required="true">
+                                        <label for="emailIndex">Email Address</label>
+                                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control animate__animated animate__fadeIn animate__delay-0.4s" id="subjectIndex" placeholder="Subject" required aria-required="true">
+                                        <label for="subjectIndex">Subject</label>
+                                        <div class="invalid-feedback">Please enter a subject.</div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control animate__animated animate__fadeIn animate__delay-0.6s" placeholder="Your Message" id="messageIndex" style="height: 150px" required aria-required="true"></textarea>
+                                        <label for="messageIndex">Your Message</label>
+                                        <div class="invalid-feedback">Please enter your message.</div>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-end">
+                                    <button type="submit" class="btn btn-custom animate__animated animate__pulse animate__infinite">Send Message</button>
+                                </div>
+                            </div>
+                            <div class="success-message" id="successMessageIndex">Thank you! Your message has been submitted.</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start mb-4">
+                    <h5 class="animate__animated animate__fadeIn">CNG Testing Plant</h5>
+                    <p class="animate__animated animate__fadeIn animate__delay-0.5s">Driving clean energy with innovative CNG testing.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <h5 class="animate__animated animate__fadeIn animate__delay-0.2s">Quick Links</h5>
+                    <a href="index.html" class="animate__animated animate__fadeIn animate__delay-0.4s">Home</a> |
+                    <a href="about.html" class="animate__animated animate__fadeIn animate__delay-0.4s">About</a> |
+                    <a href="#technologies" class="animate__animated animate__fadeIn animate__delay-0.4s">Technologies</a> |
+                    <a href="#services" class="animate__animated animate__fadeIn animate__delay-0.4s">Services</a> |
+                    <a href="gallary.html" class="animate__animated animate__fadeIn animate__delay-0.4s">Gallery</a> |
+                    <a href="blog.html" class="animate__animated animate__fadeIn animate__delay-0.4s">Blog</a> |
+                    <a href="contact.html" class="animate__animated animate__fadeIn animate__delay-0.4s">Contact</a>
+                </div>
+                <div class="col-md-4 text-center text-md-end mb-4">
+                    <h5 class="animate__animated animate__fadeIn animate__delay-0.3s">Follow Us</h5>
+                    <a href="#" class="animate__animated animate__fadeIn animate__delay-0.5s"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="animate__animated animate__fadeIn animate__delay-0.6s"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="animate__animated animate__fadeIn animate__delay-0.7s"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <p class="text-center mb-0 animate__animated animate__fadeIn animate__delay-0.8s">© 2025 CNG Testing Plant. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and Popper.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <!-- Scroll Animation and Form Validation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Animation
+            const elements = document.querySelectorAll('.scroll-animate');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            elements.forEach(element => observer.observe(element));
+
+            // Form Validation
+            const form = document.getElementById('contactFormIndex');
+            const successMessage = document.getElementById('successMessageIndex');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let isValid = true;
+                ['nameIndex', 'emailIndex', 'subjectIndex', 'messageIndex'].forEach(id => {
+                    const input = document.getElementById(id);
+                    if (!input.value.trim()) {
+                        input.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        input.classList.remove('is-invalid');
+                    }
+                });
+                if (isValid) {
+                    successMessage.style.display = 'block';
+                    form.reset();
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 3000);
+                }
+            });
+
+            // Add animation delays to feature cards and service items
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            const serviceItems = document.querySelectorAll('.service-item');
+            serviceItems.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.2}s`;
+            });
+        });
+    </script>
+</body>
+</html>

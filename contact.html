@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - CNG Testing Plant</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #2d3436;
+            background-color: #f4f7fa;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #2c3e50, #1a3c34) !important;
+            padding: 1.2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ffffff !important;
+        }
+        .nav-link {
+            color: #dfe6e9 !important;
+            font-weight: 500;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .nav-link:hover {
+            color: #00cec9 !important;
+            transform: translateY(-2px);
+        }
+        section {
+            padding: 100px 0;
+        }
+        h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            color: #1a3c34;
+            text-align: center;
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(45deg, #00b894, #00cec9);
+            margin: 10px auto;
+            animation: pulse-line 2s infinite;
+        }
+        .contact-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 3rem;
+            transition: transform 0.3s;
+            border: 2px solid transparent;
+        }
+        .contact-card:hover {
+            transform: translateY(-10px);
+            border-image: linear-gradient(45deg, #00b894, #00cec9) 1;
+        }
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #dfe6e9;
+            padding: 0.8rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-control:focus {
+            border-color: #00b894;
+            box-shadow: 0 0 8px rgba(0, 184, 148, 0.3);
+        }
+        .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+        .btn-custom {
+            background: linear-gradient(45deg, #00b894, #00cec9);
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-custom:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 200, 150, 0.4);
+        }
+        .btn-custom::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            left: -100%;
+            top: 0;
+            transition: left 0.5s;
+        }
+        .btn-custom:hover::after {
+            left: 100%;
+        }
+        .map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            height: 320px;
+            margin-top: 5%;
+        }
+        .map-placeholder {
+            background: #dfe6e9;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2d3436;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 20px;
+        }
+        .contact-info i {
+            color: #00b894;
+            margin-right: 12px;
+            font-size: 1.5rem;
+        }
+        .contact-info p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .success-message {
+            display: none;
+            color: #00b894;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .footer {
+            background: linear-gradient(135deg, #2c3e50, #1a3c34);
+            color: #ffffff;
+            padding: 60px 0;
+        }
+        .footer a {
+            color: #00cec9;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+        .footer a:hover {
+            color: #ffffff;
+        }
+        .footer i {
+            font-size: 1.8rem;
+            margin: 0 12px;
+            transition: transform 0.3s;
+        }
+        .footer i:hover {
+            transform: scale(1.2);
+        }
+        /* Automation Animations */
+        @keyframes gear-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulse-line {
+            0% { transform: scaleX(1); }
+            50% { transform: scaleX(1.2); }
+            100% { transform: scaleX(1); }
+        }
+        @keyframes circuit-flow {
+            0% { background-position: 0 0; }
+            100% { background-position: -100px 0; }
+        }
+        .animate__animated {
+            animation-duration: 1.2s;
+        }
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .circuit-bg {
+            position: relative;
+        }
+        .circuit-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 200, 150, 0.2), transparent);
+            animation: circuit-flow 3s linear infinite;
+            z-index: -1;
+        }
+
+
+
+.contact-section {
+            padding: 100px 0;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-title h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #1a3c34;
+            position: relative;
+        }
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1.5s ease-in-out 0.5s;
+        }
+        .contact-info-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 2rem;
+            border: 2px solid transparent;
+            transition: transform 0.4s ease-in-out;
+        }
+        .contact-info-box:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-image: linear-gradient(45deg, var(--accent), var(--accent-hover)) 1;
+        }
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+            transition: transform 0.4s ease-in-out;
+        }
+        .contact-info-item:hover {
+            transform: translateX(10px);
+        }
+        .contact-info-item i {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-right: 15px;
+            transition: transform 0.4s ease-in-out;
+        }
+        .contact-info-item:hover i {
+            transform: rotate(360deg);
+        }
+        .contact-info-item a {
+            color: var(--text-light);
+            text-decoration: none;
+        }
+        .contact-info-item a:hover {
+            color: var(--accent-hover);
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 320px;
+            border: 0;
+            border-radius: 16px;
+            margin-top: 0rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease-in-out;
+        }
+        .map-container iframe:hover {
+            transform: scale(1.02);
+        }
+        .contact-form {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 2.5rem;
+            border: 2px solid transparent;
+            transition: transform 0.4s ease-in-out;
+        }
+        .contact-form:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-image: linear-gradient(45deg, var(--accent), var(--accent-hover)) 1;
+        }
+        .form-floating > label {
+            color: #888;
+            transition: all 0.3s ease-in-out;
+        }
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #dfe6e9;
+            padding: 0.8rem;
+            transition: border-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+        }
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 0.3rem rgba(0, 184, 148, 0.2);
+        }
+        .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+        .success-message {
+            display: none;
+            color: var(--accent);
+            font-weight: 500;
+            text-align: center;
+            margin-top: 1rem;
+            animation: bounceIn 1s ease-in-out;
+        }
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #2c3e50, #1a3c34);
+            color: #ffffff;
+            padding: 60px 0;
+        }
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .footer a:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        .footer i {
+            font-size: 1.8rem;
+            margin: 0 12px;
+            transition: transform 0.5s ease-in-out;
+        }
+        .footer i:hover {
+            transform: rotate(360deg) scale(1.2);
+        }
+        /* Animations */
+        @keyframes pulse-line {
+            0% { transform: scaleX(1); }
+            50% { transform: scaleX(1.15); }
+            100% { transform: scaleX(1); }
+        }
+        @keyframes smoothScale {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .animate__animated {
+            animation-duration: 1.2s;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            animation: smoothScale 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 100px 0;
+            }
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            .hero-section p {
+                font-size: 1.1rem;
+            }
+ .section-title h2 {
+                font-size: 2.2rem;
+            }
+            .section-title p {
+                font-size: 1rem;
+            }
+            .map-container iframe {
+                height: 500px;
+            }
+            .btn-custom {
+                padding: 0.8rem 2rem;
+            }
+        }
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">CNG Testing Plant</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#technologies">Technologies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section container circuit-bg" aria-label="Contact us">
+        <div class="section-title scroll-animate">
+            <h2 class="animate__animated animate__fadeInDown">Let's Connect</h2>
+            <p class="animate__animated animate__fadeInUp animate__delay-1s">Have a question or project in mind? We’d love to hear from you.</p>
+        </div>
+        <div class="row g-5">
+            <div class="col-lg-4 scroll-animate" data-delay="100">
+                <div class="contact-info-box p-4 animate__animated animate__fadeInUp">
+                    <div class="contact-info-item">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true" style="color:#00cca4"></i>
+                        <span>123 Clean Energy Lane, Green City, GC 12345, USA</span>
+                    </div>
+                    <div class="contact-info-item">
+                        <i class="fas fa-envelope" aria-hidden="true" style="color:#00cca4"></i>
+                        <span><a href="mailto:info@cngtestingplant.com">info@cngtestingplant.com</a></span>
+                    </div>
+                    <div class="contact-info-item">
+                        <i class="fas fa-phone" aria-hidden="true" style="color:#00cca4"></i>
+                        <span><a href="tel:+15551234567">+1 (555) 123-4567</a></span>
+                    </div>
+                </div>
+                <div class="map-container animate__animated animate__fadeInUp animate__delay-1s">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0194!2d-122.4216!3d37.7749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDU0JzUzLjciTiAxMjLCsDI1JzE2LjciVw!5e0!3m2!1sen!2sus!4v1630000000000!5m2!1sen!2sus" width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy" title="CNG Testing Plant Location"></iframe>
+                </div>
+            </div>
+            <div class="col-lg-8 scroll-animate" data-delay="200">
+                <div class="contact-form p-4 animate__animated animate__fadeInUp">
+                    <form id="contactForm" novalidate>
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control animate__animated animate__fadeIn" id="name" placeholder="Your Name" required aria-required="true">
+                                    <label for="name">Your Name</label>
+                                    <div class="invalid-feedback">Please enter your name.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control animate__animated animate__fadeIn animate__delay-1s" id="email" placeholder="Email" required aria-required="true">
+                                    <label for="email">Email Address</label>
+                                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control animate__animated animate__fadeIn animate__delay-2s" id="subject" placeholder="Subject" required aria-required="true">
+                                    <label for="subject">Subject</label>
+                                    <div class="invalid-feedback">Please enter a subject.</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control animate__animated animate__fadeIn animate__delay-3s" placeholder="Your Message" id="message" style="height: 150px" required aria-required="true"></textarea>
+                                    <label for="message">Your Message</label>
+                                    <div class="invalid-feedback">Please enter your message.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-end">
+                                <button type="submit" class="btn btn-outline-success pulse-animation animate__animated animate__pulse animate__infinite">Send Message</button>
+                            </div>
+                        </div>
+                        <div class="success-message" id="successMessage">Thank you! Your message has been submitted.</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start mb-4">
+                    <h5>CNG Testing Plant</h5>
+                    <p>Driving clean energy with innovative CNG testing.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <h5>Quick Links</h5>
+                    <a href="index.html">Home</a> |
+                    <a href="about.html">About</a> |
+                    <a href="index.html#technologies">Technologies</a> |
+                    <a href="index.html#services">Services</a> |
+                    <a href="gallary.html">Gallery</a> |
+                    <a href="blog.html">Blog</a> |
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="col-md-4 text-center text-md-end mb-4">
+                    <h5>Follow Us</h5>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <p class="text-center mb-0">© 2025 CNG Testing Plant. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and Popper.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <!-- Scroll Animation and Form Validation Script -->
+    <script>
+           document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Animation
+            const elements = document.querySelectorAll('.scroll-animate');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        entry.target.classList.add('animate__zoomInUp');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            elements.forEach(element => observer.observe(element));
+
+            // Form Validation
+            const form = document.getElementById('contactForm');
+            const successMessage = document.getElementById('successMessage');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let isValid = true;
+                ['name', 'email', 'subject', 'message'].forEach(id => {
+                    const input = document.getElementById(id);
+                    if (!input.value.trim()) {
+                        input.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        input.classList.remove('is-invalid');
+                    }
+                });
+                if (isValid) {
+                    successMessage.style.display = 'block';
+                    form.reset();
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 3000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
